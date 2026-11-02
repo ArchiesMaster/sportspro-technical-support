@@ -1,0 +1,664 @@
+swagger: '2.0'
+
+info:
+  title: SportsPro Technical Support API
+  version: '2.0.0'
+  description: >
+    REST API for the SportsPro Technical Support application.
+
+securityDefinitions:
+
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      Enter your JWT as:
+      Bearer <token>
+
+host: localhost
+basePath: /
+schemes:
+  - http
+
+paths:
+
+  /api/auth/login:
+    post:
+      summary: Authenticate a user.
+      description: Authenticate a user using their email address and password.
+
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                example: admin@sportspro.com
+              password:
+                type: string
+                example: admin123
+
+      responses:
+        200:
+          description: Login successful.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Login successful.
+              role:
+                type: string
+                example: admin
+              token:
+                type: string
+                description: JWT used to authenticate future requests.
+        400:
+          description: Validation failed.
+        401:
+          description: Invalid email or password.
+
+  /api/auth/register:
+    post:
+      summary: Register a new user.
+      description: Create a new Administrator, Technician or Customer account.
+
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - firstName
+              - lastName
+              - email
+              - password
+              - confirmPassword
+              - role
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              confirmPassword:
+                type: string
+              role:
+                type: string
+                enum:
+                  - admin
+                  - technician
+                  - customer
+              address:
+                type: string
+              city:
+                type: string
+              state:
+                type: string
+              postalCode:
+                type: string
+              countryCode:
+                type: string
+              phone:
+                type: string
+
+      responses:
+        201:
+          description: User registered successfully.
+        400:
+          description: Validation failed.
+        409:
+          description: Email address already exists.
+
+  /api/auth/refresh:
+    post:
+      summary: Refresh a JWT.
+      description: Generate a new JWT for an authenticated user without requiring them to log in again.
+
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: Token refreshed successfully.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Token refreshed.
+              token:
+                type: string
+                description: New JWT.
+        401:
+          description: Authentication required.
+
+  /api/products:
+
+    get:
+      summary: Retrieve all products.
+      description: Retrieve a list of all products from the database. Requires authentication.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: A list of products.
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                productCode:
+                  type: string
+                name:
+                  type: string
+                version:
+                  type: string
+                releaseDate:
+                  type: string
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.  
+
+    post:
+      summary: Add a new product.
+      description: Add a new product to the database. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              productCode:
+                type: string
+              name:
+                type: string
+              version:
+                type: string
+              releaseDate:
+                type: string
+      responses:
+        201:
+          description: Product created successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/products/{productCode}:
+
+    delete:
+      summary: Delete a product.
+      description: Delete a product from the database. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: productCode
+          required: true
+          type: string
+          description: Product code of the product to delete.
+      responses:
+        200:
+          description: Product deleted successfully.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Product not found.
+
+  /api/technicians:
+
+    get:
+      summary: Retrieve all technicians.
+      description: Retrieve a list of all technicians from the database. Administrator access is required.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: A list of technicians.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+    post:
+      summary: Add a new technician.
+      description: Add a new technician to the database. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+              phone:
+                type: string
+      responses:
+        201:
+          description: Technician created successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/technicians/{id}:
+
+    delete:
+      summary: Delete a technician.
+      description: Delete a technician using their ID. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Technician ID.
+      responses:
+        200:
+          description: Technician deleted successfully.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Technician not found.
+
+  /api/countries:
+
+    get:
+      summary: Retrieve all countries.
+      description: Retrieve a list of countries. Requires authentication.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: A list of countries.
+        401:
+          description: Authentication required.
+
+  /api/customers/login:
+
+    get:
+      summary: Retrieve customer by email.
+      description: Retrieve a customer record using their email address. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: email
+          required: true
+          type: string
+          description: Customer email address.
+      responses:
+        200:
+          description: Customer found.
+        401:
+          description: Authentication required.
+        404:
+          description: Customer not found.
+
+  /api/customers/search:
+
+    get:
+      summary: Search customers.
+      description: Search for customers by their last name. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: lastName
+          required: true
+          type: string
+          description: Customer last name.
+      responses:
+        200:
+          description: Matching customers returned.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/customers/{id}:
+
+    get:
+      summary: Retrieve customer details.
+      description: Retrieve the details of a customer. Administrator access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Customer ID.
+      responses:
+        200:
+          description: Customer details returned.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Customer not found.
+
+    put:
+      summary: Update customer information.
+      description: Update an existing customer's details. Requires authentication. Password changes are synchronised with the users table.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Customer ID.
+
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              address:
+                type: string
+              city:
+                type: string
+              state:
+                type: string
+              postalCode:
+                type: string
+              countryCode:
+                type: string
+              phone:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: Customer updated successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Customer not found.
+        409:
+          description: A customer with that email already exists.
+        500:
+          description: Unable to update customer.
+
+  /api/registrations:
+
+    post:
+      summary: Register a product.
+      description: Register a product for a customer. Customer access is required.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              customerID:
+                type: integer
+              productCode:
+                type: string
+      responses:
+        201:
+          description: Product registered successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/dashboard:
+    get:
+      summary: Retrieve dashboard data.
+      description: Retrieve personalised dashboard information for the authenticated user.
+
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: Dashboard data returned successfully.
+          schema:
+            type: object
+            properties:
+              role:
+                type: string
+              statistics:
+                type: object
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/incidents:
+    get:
+      summary: Retrieve all incidents.
+      description: Retrieve all incidents. Administrator or Technician access required.
+
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: A list of incidents.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+    post:
+      summary: Create a new incident.
+      description: Create a new incident. Administrator access required.
+
+      security:
+        - BearerAuth: []
+
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - customerID
+              - productCode
+              - title
+              - description
+            properties:
+              customerID:
+                type: integer
+              productCode:
+                type: string
+              title:
+                type: string
+              description:
+                type: string
+      responses:
+        201:
+          description: Incident created successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/incidents/unassigned:
+    get:
+      summary: Retrieve unassigned incidents.
+      description: Retrieve all incidents that have not yet been assigned to a technician. Administrator access required.
+
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: List of unassigned incidents.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/incidents/assigned:
+    get:
+      summary: Retrieve assigned incidents.
+      description: Retrieve all incidents assigned to the currently authenticated technician.
+
+      security:
+        - BearerAuth: []
+
+      responses:
+        200:
+          description: List of assigned incidents.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+
+  /api/incidents/{id}:
+    get:
+      summary: Retrieve a single incident.
+      description: Retrieve an incident using its ID. Administrator or Technician access required.
+
+      security:
+        - BearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Incident ID.
+
+      responses:
+        200:
+          description: Incident returned successfully.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Incident not found.
+
+    put:
+      summary: Update an incident.
+      description: Update an assigned incident. Technician access required.
+
+      security:
+        - BearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Incident ID.
+
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - description
+              - closeIncident
+            properties:
+              description:
+                type: string
+              closeIncident:
+                type: boolean
+
+      responses:
+        200:
+          description: Incident updated successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Incident not found.
+
+  /api/incidents/{id}/assign:
+    put:
+      summary: Assign an incident.
+      description: Assign an incident to a technician. Administrator access required.
+
+      security:
+        - BearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Incident ID.
+
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - techID
+            properties:
+              techID:
+                type: integer
+
+      responses:
+        200:
+          description: Incident assigned successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Authentication required.
+        403:
+          description: Access denied.
+        404:
+          description: Incident not found.

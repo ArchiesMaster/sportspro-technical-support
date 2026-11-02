@@ -1,0 +1,78 @@
+services:
+  # Postgres service to run the database
+  postgres:
+    image: postgres:17
+
+    container_name: sportspro-postgres
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./server/db:/docker-entrypoint-initdb.d
+
+  # Two instances of the Node.js application for load balancing
+  app1:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+
+    container_name: sportspro-app1
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+
+    depends_on:
+      - postgres
+
+  app2:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+
+    container_name: sportspro-app2
+
+    ports:
+      - "3001:3000"
+
+    env_file:
+      - .env
+
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+
+    depends_on:
+      - postgres
+
+  # nginx service to serve as a reverse proxy for app1 and app2
+  nginx:
+    container_name: nginx
+
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    ports:
+      - "80:80"
+
+    depends_on:
+      - app1
+      - app2
+
+# Named volume for Postgres data persistence
+volumes:
+  postgres_data:

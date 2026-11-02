@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Product - SportsPro Technical Support</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+
+            <div>
+                <h1>SportsPro Technical Support</h1>
+                <p>Sports management software for the sports enthusiast</p>
+            </div>
+            <!-- Logout -->
+            <button
+                id="logoutButton"
+                class="btn btn-header">
+                Logout
+            </button>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <div class="main-panel small-panel register-product-panel">
+
+            <div class="header-section">
+                <h2>Register Product</h2>
+                <a href="index.html">Home</a>
+            </div>
+
+            <!-- Registration Form -->
+            <div
+                id="registrationPanel"
+                class="registration-panel mb-4">
+
+                <div class="form-group">
+
+                    <label for="product">
+                        Product:
+                    </label>
+
+                    <select
+                        id="product"
+                        name="product">
+
+                        <option value="">
+                            -- Select a Product --
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Success or error message -->
+                <div
+                    id="registerMessage"
+                    class="success-message">
+                </div>
+
+                <button
+                    id="registerButton"
+                    class="btn btn-primary full-width">
+
+                    Register Product
+
+                </button>
+
+            </div>
+
+            <!-- Confirmation Message -->
+            <div
+                id="successPanel"
+                class="success-panel hidden">
+
+                <div class="alert alert-success">
+                    <p id="successMessage"></p>
+                </div>
+
+                <button
+                    id="registerAnotherButton"
+                    class="btn btn-primary full-width">
+
+                    Register Another Product
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SportsPro, Inc.</p>
+        </div>
+    </footer>
+
+    <script src="js/auth_context.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/register_product.js"></script>
+
+</body>
+</html>

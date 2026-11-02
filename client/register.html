@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsPro Technical Support</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>SportsPro Technical Support</h1>
+            <p>Sports management software for the sports enthusiast</p>
+        </div>
+    </header>
+    <main class="container register-container">
+        <div class="main-panel">
+            <div class="header-section">
+                <h2>Register</h2>
+            </div>
+            <div class="form-panel">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword">
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" name="role">
+                        <option value="">
+                            -- Select Role --
+                        </option>
+                        <option value="customer">
+                            Customer
+                        </option>
+                        <option value="technician">
+                            Technician
+                        </option>
+                        <option value="admin">
+                            Administrator
+                        </option>
+                    </select>
+                </div>
+
+                <div id="customerFields">
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" name="state">
+                    </div>
+                    <div class="form-group">
+                        <label for="postalCode">Postal Code:</label>
+                        <input type="text" id="postalCode" name="postalCode">
+                    </div>
+                    <div class="form-group">
+                        <label for="countryCode">Country:</label>
+                        <select id="countryCode" name="countryCode">
+                            <option value="AU">
+                                Australia
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone" name="phone">
+                    </div>
+                </div>
+
+                <div id="technicianFields" class="hidden">
+                    <div class="form-group">
+                        <label for="technicianPhone">Phone:</label>
+                        <input type="text" id="technicianPhone" name="technicianPhone">
+                    </div>
+                </div>                
+                <div class="button-group">
+                    <button id="registerButton" class="btn btn-primary">Register</button>
+                </div>
+                <p id="registerMessage" class="success-message"></p>
+                <p style="text-align: center;">Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SportsPro, Inc.</p>
+        </div>
+    </footer>    
+    <script src="js/register.js"></script>
+</body>
+</html>

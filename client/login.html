@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsPro Technical Support</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>SportsPro Technical Support</h1>
+            <p>Sports management software for the sports enthusiast</p>
+        </div>
+    </header>
+
+    <main class="container login-container">
+        <div class="main-panel">
+            <div class="header-section">
+                <h2>SportsPro Login</h2>
+            </div>
+            <div class="form-panel">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="button-group">
+                    <button id="loginButton" class="btn btn-primary">Login</button>
+                </div>
+
+                <p id="loginMessage" class="success-message"></p>
+
+                <p style="text-align: center;">Don't have an account? <a href="register.html">Register here</a></p>
+            </div>
+            <div class="info-section">
+                <h2>Example default logins:</h2>
+                <ul>
+                    <li>Email: admin@sportspro.com | Password: admin123 | Admin</li>
+                    <li>Email: lachlan.baker@sportspro.com | Password: technician123 | Technician</li>
+                    <li>Email: archie.bald@email.com | Password: customer123 | Customer</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SportsPro, Inc.</p>
+        </div>
+    </footer>
+    <script src="js/auth_context.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

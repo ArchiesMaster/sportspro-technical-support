@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Incident - SportsPro Technical Support</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+
+            <div>
+                <h1>SportsPro Technical Support</h1>
+                <p>Sports management software for the sports enthusiast</p>
+            </div>
+            <!-- Logout -->
+            <button
+                id="logoutButton"
+                class="btn btn-header">
+                Logout
+            </button>
+
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <div class="main-panel">
+            <div class="header-section">
+                <h2>Assign Incident</h2>
+                <a href="index.html">Home</a>
+            </div>
+            
+            <!-- Unassigned Incidents List -->
+            <div class="incidents-panel mb-4">
+                <h3>Select Incident</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Date Opened</th>
+                                <th>Title</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incidentsTable">
+                            <!-- Dynamic unassigned incidents data from API -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Incident Assignment Form (Initially hidden - shown after selecting an incident) -->
+            <div id="assignmentPanel" class="assignment-panel hidden">
+                <h3>Assign to Technician</h3>
+                
+                <div class="incident-details mb-4">
+                    <div class="detail-row">
+                        <div class="detail-label">Incident ID:</div>
+                        <div id="incidentID" class="detail-value"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Customer:</div>
+                        <div id="incidentCustomer" class="detail-value"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Product:</div>
+                        <div id="incidentProduct" class="detail-value"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date Opened:</div>
+                        <div id="incidentDateOpened" class="detail-value"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Title:</div>
+                        <div id="incidentTitle" class="detail-value"></div>
+                    </div>
+                    <div class="detail-row full-width">
+                        <div class="detail-label">Description:</div>
+                        <div id="incidentDescription" class="detail-value description-box">
+                            Unable to generate end-of-season statistics report. The application crashes when attempting to run reports.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="technician">Technician:</label>
+                    <select id="technician" name="technician">
+                        <option value="">-- Select a Technician --</option>
+                        <!-- Dynamically populated technicians -->
+                    </select>
+                </div>
+                
+                <div class="button-group">
+                    <button id="assignButton" class="btn btn-primary">Assign Incident</button>
+                    <button id="cancelButton" class="btn btn-secondary">Cancel</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SportsPro, Inc.</p>
+        </div>
+    </footer>
+    <script src="js/auth_context.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/assign_incident.js"></script>
+</body>
+</html>
